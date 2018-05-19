@@ -1,0 +1,572 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Other Detail</title>
+    <script src="Script/js/jquery-1.9.1.min.js"></script>
+    <script src="Script/js/bootstrap.js"></script>
+    <link href="Script/css/bootstrap.css" rel="stylesheet" />
+    <script src="Script/js/angular.js"></script>
+    <script src="Script/js/ui-bootstrap-tpls-1.3.0.min.js"></script>
+    <!--<script src="Script/js/ui-bootstrap-tpls-1.3.3.js"></script>-->
+    <script src="Script/js/MyScript.js"></script>
+    <!--<link href="Script/css/MyStyles.css" rel="stylesheet" />-->
+    <script src="Script/js/Mydatepicker.js"></script>
+    <link href="Script/js/MyDatepicker.css" rel="stylesheet" />
+    <script src="Script/js/sweetalert.min.js"></script>
+    <link href="Script/js/sweetalert.css" rel="stylesheet" />
+    <script src="Script/js/ngStorgae.js"></script>
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+            /*font-family: 'Merriweather', serif;*/
+        }
+
+        .backgrond {
+            background-color: #2e3844 !important;
+        }
+    </style>
+</head>
+<body ng-app="myApp" class="backgrond">
+    <form name="myform" data-toggle="validator">
+        <div ng-controller="OtherCntrl" class="container">
+            <div class="row">
+                <div class="page-header">
+                    <a href="Default.aspx"></a>
+                    <img src="Images/lpu_logo.png" alt="Lovely Professional University" />
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">APPLICATION ID</div>
+                <div class="panel-body">
+                    <div class="col-lg-offset-1 col-lg-3">
+                        <label class="heading_color">Your Application ID</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" disabled="true" ng-model="OtherApplicationId" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">RESEARCH ACTIVITY</div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td align="left">a)</td>
+                                    <td align="left">
+                                        <span class="heading_color">Research Papers/Books published/Conferences/Articles/Monographs etc.</span>
+                                    </td>
+                                    <td align="left" width="500px">
+                                        <textarea class="form-control" ng-model="ResearchActivityA" placeholder="Maximum 1000 characters allowed"></textarea>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left">b)</td>
+                                    <td align="left">
+                                        <span class="heading_color">Participation (Seminars/Workshops/Conferences/Symposia/Continuing Education Programmes/Traninig etc.)</span>
+                                    </td>
+                                    <td align="left">
+                                        <textarea class="form-control" ng-model="ResearchActivityB" placeholder="Maximum 1000 characters allowed"></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">ABOUT YOU</div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td align="left">a)</td>
+                                    <td align="left">
+                                        <span class="heading_color">What distinctive talents do you possess ?</span>
+                                    </td>
+                                    <td align="left" width="500px">
+                                        <textarea class="form-control" ng-model="ResearchActivityC" placeholder="Maximum 1000 characters allowed" ></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">LANGUAGES</div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td align="left">                                        
+                                        <label class="heading_color">Speak</label>
+                                        <strong style="color:red; font-size:medium">*</strong>
+                                    </td>
+                                    <td align="left">
+                                        <input type="text" class="form-control" ng-model="LanguageSpeak" required />
+                                    </td>
+                                    <td align="left">
+                                        <label class="heading_color">Read</label>
+                                        <strong style="color:red; font-size:medium">*</strong>
+                                    </td>
+                                    <td align="left">
+                                        <input type="text" class="form-control" ng-model="LanguageRead" required />
+                                    </td>
+                                    <td align="left">
+                                        <label class="heading_color">Write</label>
+                                        <strong style="color:red; font-size:medium">*</strong>
+                                    </td>
+                                    <td align="left">
+                                        <input type="text" class="form-control" ng-model="LanguageWrite" required />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">DETAILS OF REFERENCES (EXCEPT BLOOD RELATIONS & NEAR RELATIVES)</div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                                <tr>
+                                    <th align="center" class="heading_color">SrNo</th>
+                                    <th align="center" class="heading_color">Name</th>
+                                    <th align="center" class="heading_color">Occupation</th>
+                                    <th align="center" class="heading_color">Address</th>
+                                    <th align="center" class="heading_color">Contact No</th>
+                                    <th align="center" class="heading_color">Email</th>
+                                    <th align="center" class="heading_color">Known Since</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <label class="heading_color">1</label>
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="text" ng-model="FirstRefName" placeholder="Full Name"  />
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="text" ng-model="FirstRefOccupation" placeholder="Occupation & Designation"  />
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="text" ng-model="FirstRefAddress" placeholder="Permanent Address"  />
+                                    </td>
+                                    <td align="center">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" ng-model="FirstRefContact" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="10" placeholder="Mobile No"  />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                        </div>
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="email" ng-model="FirstRefEmail" placeholder="xyz@abc.com"  />
+                                    </td>
+                                    <td align="center">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" ng-model="FirstRefKnownSince" name="date" placeholder="DD/MM/YYYY"  />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <label class="heading_color">2</label>
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="text" ng-model="SecondRefName" placeholder="Full Name"  />
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="text" ng-model="SecondRefOccupation" placeholder="Occupation & Designation"  />
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="text" ng-model="SecondRefAddress" placeholder="Permanent Address"  />
+                                    </td>
+                                    <td align="center">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" ng-model="SecondRefContact" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="10" placeholder="Mobile No"  />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                        </div>
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="email" ng-model="SecondRefEmail" placeholder="xyz@abc.com"  />
+                                    </td>
+                                    <td align="center">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" ng-model="SecondRefKnownSince" name="date" placeholder="DD/MM/YYYY"  />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <label class="heading_color">3</label>
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="text" ng-model="ThirdRefName" placeholder="Full Name"  />
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="text" ng-model="ThirdRefOccupation" placeholder="Occupation & Designation"  />
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="text" ng-model="ThirdRefAddress" placeholder="Permanent Address"  />
+                                    </td>
+                                    <td align="center">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" ng-model="ThirdRefContact" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="10" placeholder="Mobile No"  />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                        </div>
+                                    </td>
+                                    <td align="center">
+                                        <input class="form-control" type="email" ng-model="ThirdRefEmail" placeholder="xyz@abc.com"  />
+                                    </td>
+                                    <td align="center">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" ng-model="ThirdRefKnownSince" name="date" placeholder="DD/MM/YYYY"  />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">ABOUT YOUR FAMILY (FATHER / MOTHER / SPOUSE / BROTHER / SISTER / SON / DAUGHTER)</div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                                <tr>
+                                    <th align="center" class="heading_color">Sr No</th>
+                                    <th align="center" class="heading_color">Name</th>
+                                    <th align="center" class="heading_color">Relationship</th>
+                                    <th align="center" class="heading_color">Age</th>
+                                    <th align="center" class="heading_color">Contact No</th>
+                                    <th align="center" class="heading_color">Email</th>
+                                    <th align="center" class="heading_color">Qualification</th>
+                                    <th align="center" class="heading_color">Profession</th>
+                                    <th align="center" class="heading_color">Organization & Place of work (If working)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <label class="heading_color">1</label>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="FirstFamilytName" placeholder="Full Name"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="FirstFamilytRelation" placeholder="Realtionship"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="FirstFamilytAge" placeholder="Age" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="2"  />
+                                    </td>
+                                    <td align="center">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" ng-model="FirstFamilytContactNo" placeholder="Mobile No" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="10"  />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                        </div>
+                                    </td>
+                                    <td align="center">
+                                        <input type="email" class="form-control" ng-model="FirstFamilytEmail" placeholder="xyz@abc.com"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="FirstFamilytQualification" placeholder="Qualification"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="FirstFamilytProfession" placeholder="Profession"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="FirstFamilytOrganization" placeholder="Organization Name"  />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">
+                                        <label class="heading_color">2</label>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SecondFamilytName" placeholder="Full Name"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SecondFamilytRelation" placeholder="Realtionship"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SecondFamilytAge" placeholder="Age" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="2"  />
+                                    </td>
+                                    <td align="center">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" ng-model="SecondFamilytContactNo" placeholder="Mobile No" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="10"  />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                        </div>
+                                    </td>
+                                    <td align="center">
+                                        <input type="email" class="form-control" ng-model="SecondFamilytEmail" placeholder="xyz@abc.com"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SecondFamilytQualification" placeholder="Qualification"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SecondFamilytProfession" placeholder="Profession"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SecondFamilytOrganization" placeholder="Organization Name"  />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">
+                                        <label class="heading_color">3</label>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="ThirdFamilytName" placeholder="Full Name"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="ThirdFamilytRelation" placeholder="Realtionship"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="ThirdFamilytAge" placeholder="Age" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="2"  />
+                                    </td>
+                                    <td align="center">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" ng-model="ThirdFamilytContactNo" placeholder="Mobile No" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="10"  />
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                        </div>
+                                    </td>
+                                    <td align="center">
+                                        <input type="email" class="form-control" ng-model="ThirdFamilytEmail" placeholder="xyz@abc.com"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="ThirdFamilytQualification" placeholder="Qualification"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="ThirdFamilytProfession" placeholder="Profession"  />
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="ThirdFamilytOrganization" placeholder="Organization Name"  />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">ABOUT YOUR HEALTH</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-offset-1 col-lg-12">
+                            <span style="color:red; font-size:small">(Please fill NA  where not available.)</span>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:8px">
+                        <div class="col-lg-offset-1 col-lg-2">
+                            <label class="heading_color">Blood Group</label>
+                            <strong style="color:red; font-size:medium">*</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <select ng-model="BloodGroup" ng-options="bg.Bgroup as bg.Bgroup for bg in BloodGroups" class="form-control" required>
+                                <option value="">-- Please Select --</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="heading_color">Any chroinc disease</label>
+                            <strong style="color:red; font-size:medium">*</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="text" ng-model="chroincDiseas" placeholder="If yes please specify" required />
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:8px">
+                        <div class="col-lg-offset-1 col-lg-2">
+                            <label class="heading_color">Height</label>
+                            <strong style="color:red; font-size:medium">*</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="text" ng-model="Height" placeholder="Height" required />
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="heading_color">Any ENT problem</label>
+                            <strong style="color:red; font-size:medium">*</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="text" ng-model="EntProblem" placeholder="If yes please specify" required />
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:8px">
+                        <div class="col-lg-offset-1 col-lg-2">
+                            <label class="heading_color">Weight</label>
+                            <strong style="color:red; font-size:medium">*</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="text" ng-model="Weight" placeholder="Weight" required />
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="heading_color">Physical Handicap</label>
+                            <strong style="color:red; font-size:medium">*</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="text" ng-model="PhysicalHandicap" placeholder="If yes please specify" required />
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:8px">
+                        <div class="col-lg-offset-1 col-lg-2">
+                            <label class="heading_color">Eye Sight </label>
+                            <strong style="color:red; font-size:medium">*</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="text" ng-model="EyeSight" placeholder="If wear glasses, Please mention no" required />
+                        </div>
+                        <div class="col-lg-2">
+                            <label class="heading_color">Any type of allergy</label>
+                            <strong style="color:red; font-size:medium">*</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <input class="form-control" type="text" ng-model="Allergy" placeholder="If yes please specify" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">PERSONAL HABITS</div>
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-lg-offset-1 col-lg-12">
+                            <span style="color:red; font-size:small">(Please fill NA  where not available.)</span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-offset-2 col-lg-8">
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                                <tr>
+                                    <th align="center" class="heading_color">Habit</th>
+                                    <th align="center" class="heading_color">Yes/No</th>
+                                    <th align="center" class="heading_color">If yes- Frequency of use</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="left">
+                                        <label class="heading_color">Smoking</label>
+                                        <strong style="color:red; font-size:medium">*</strong>
+                                    </td>
+                                    <td align="center">
+                                        <select ng-model="Smoking" class="form-control" required>
+                                            <option value="">Select</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SmockingFrequency" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="left">
+                                        <label class="heading_color">Use of alcohol</label>
+                                        <strong style="color:red; font-size:medium">*</strong>
+                                    </td>
+                                    <td align="center">
+                                        <select ng-model="Alcohol" class="form-control" required>
+                                            <option value="">Select</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="AlcoholFrequency" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="left">
+                                        <label class="heading_color">Chewing of Tobacco/Pan/Gutka/Narcotics</label>
+                                        <strong style="color:red; font-size:medium">*</strong>
+                                    </td>
+                                    <td align="center">
+                                        <select ng-model="Tobacco" class="form-control" required>
+                                            <option value="">Select</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="TobaccoFrequency" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="left">
+                                        <label class="heading_color">Any other please specify</label>
+                                        <strong style="color:red; font-size:medium">*</strong>
+                                    </td>
+                                    <td align="center" colspan="2">
+                                        <input type="text" class="form-control" ng-model="OtherHabitFrequency" required />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 text-center">
+                    <button class="btn btn-md btn-primary" ng-model="SubmitOtherDetail" ng-click="OtherDetailSubmit(myform.$valid)">SAVE & NEXT</button>
+                    <button class="btn btn-md btn-primary" ng-model="ResetOtherDetail" ng-click="OtherDetailReset()">RESET</button>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:50px"></div>
+
+        </div>
+    </form>
+</body>
+
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var date_input = $('input[name="date"]');
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        var options = {
+            format: 'dd/mm/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        };
+        date_input.datepicker(options);
+
+        $('.date-Year').datepicker({
+            minViewMode: 2,
+            format: 'yyyy',
+            autoclose: true,
+        });
+
+    });
+</script>

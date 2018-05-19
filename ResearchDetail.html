@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Research Detail</title>
+    <script src="Script/js/jquery-1.9.1.min.js"></script>
+    <script src="Script/js/bootstrap.js"></script>
+    <link href="Script/css/bootstrap.css" rel="stylesheet" />
+    <script src="Script/js/angular.js"></script>
+    <script src="Script/js/ui-bootstrap-tpls-1.3.0.min.js"></script>
+    <!--<script src="Script/js/ui-bootstrap-tpls-1.3.3.js"></script>-->
+    <script src="Script/js/MyScript.js"></script>
+    <!--<link href="Script/css/MyStyles.css" rel="stylesheet" />-->
+    <script src="Script/js/Mydatepicker.js"></script>
+    <link href="Script/js/MyDatepicker.css" rel="stylesheet" />
+    <script src="Script/js/sweetalert.min.js"></script>
+    <link href="Script/js/sweetalert.css" rel="stylesheet" />
+    <script src="Script/js/ngStorgae.js"></script>
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+            /*font-family: 'Merriweather', serif;*/
+        }
+
+        .backgrond {
+            background-color: #2e3844 !important;
+        }
+    </style>
+</head>
+<body ng-app="myApp" class="backgrond">
+    <form name="myform" data-toggle="validator">
+        <div ng-controller="ResearchCntrl" class="container">
+            <div class="row">
+                <div class="page-header">
+                    <a href="Default.aspx"></a>
+                    <img src="Images/lpu_logo.png" alt="Lovely Professional University" />
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">APPLICATION ID</div>
+                <div class="panel-body">
+                    <div class="col-lg-offset-1 col-lg-3">
+                        <label class="heading_color">Your Application ID</label>
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" disabled="true" ng-model="ResearchApplicationId" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">RESEARCH DETAIL</div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td align="left" width="3%">1</td>
+                                    <td align="Left" colspan="2">
+                                        <label class="heading_color">Publication Details</label>
+                                    </td>                                    
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">1(a)</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Number of Publications in Journals (Indexed in Scopus with SJR value)</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="ResearchScopusNo" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">1(b)</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Number of Publications in Journals (Indexed in WoS with impact Factor)</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="ResearchWosNo" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">2</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Publication through conferences indexed in Scopus</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="ConferenceIndexInScopus" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">3</td>
+                                    <td align="Left" colspan="2">
+                                        <label class="heading_color">External Funding Research Grant</label>
+                                    </td>                                    
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">3(a)</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Any Grant from external Funding Agency</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="GrantExternalFunding" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">3(b)</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Any Grant Applied ?</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="GrantApplied" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">4</td>
+                                    <td align="Left" colspan="2">
+                                        <label class="heading_color">Patent</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">4(a)</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Any Patent Granted ?</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="PatentGranted" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">4(b)</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Any Patent Filled ?</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="PatentFilled" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">4(c)</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Approved (if approved provide patent identification Number)</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="PatentApproved" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">5</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Copyright</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="Copyright" />
+                                    </td>
+                                </tr>                                
+                                <tr>
+                                    <td align="left" width="3%">6</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Book Published</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="BookPublished" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">7</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Organized any Conference, Provide your role ?</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="ConferenceRole" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">8</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">No. of Ph.D's supervised ?</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="PhdSupervised" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">9</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">No. of Ph.D's currently supervising ?</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="PhdSupervising" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">10</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">No. of MPhil supervised ?</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="MphilSupervised" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">11</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">No. of MPhil currently supervising ?</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="MphilSupervising" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">12</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Whether travelled abroad related to Research or Academic ?</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="AbroadVisit" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">13</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">H-Index</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="Hindex" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">14</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">i-10 index</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="Iindex" />
+                                    </td>
+                                </tr>                               
+                                <tr>
+                                    <td align="left" width="3%">15</td>
+                                    <td align="Left" colspan="2">
+                                        <label class="heading_color">Abroad Visit</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">15(a)</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Number of Countries visited for academic purpose</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="CountryVisited" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">15(b)</td>
+                                    <td align="left" width="45%">
+                                        <span class="heading_color">Name of Countries visited</span>
+                                    </td>
+                                    <td align="center" width="52%">
+                                        <input type="text" class="form-control" ng-model="CountryVisitedName" />
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">SPECIFIC ACHIEVEMENTS / INFORMATION</div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <span style="color:red; font-size:large;">Please fill NA where not applicable</span>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td align="left" width="3%">1</td>
+                                    <td align="left" width="37%">
+                                        <span class="heading_color">Achievements in Academics</span>
+                                    </td>
+                                    <td align="center" width="60%">
+                                        <textarea class="form-control" ng-model="AchievementsAcademics" required></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">2</td>
+                                    <td align="left" width="37%">
+                                        <span class="heading_color">Achievements in Research</span>
+                                    </td>
+                                    <td align="center" width="60%">
+                                        <textarea class="form-control" ng-model="AchievementsResearch" required></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">3</td>
+                                    <td align="left" width="37%">
+                                        <span class="heading_color">Achievements in industry Engagement and Relationship</span>
+                                    </td>
+                                    <td align="center" width="60%">
+                                        <textarea class="form-control" ng-model="AchievementsIndustry" required></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">4</td>
+                                    <td align="left" width="37%">
+                                        <span class="heading_color">Achievements in Leadership and Administration</span>
+                                    </td>
+                                    <td align="center" width="60%">
+                                        <textarea class="form-control" ng-model="AchievementsLeadership" required></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" width="3%">5</td>
+                                    <td align="left" width="37%">
+                                        <span class="heading_color">Achievements in Student Connect</span>
+                                    </td>
+                                    <td align="center" width="60%">
+                                        <textarea class="form-control" ng-model="AchievementsStudentConnect" required></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 text-center">
+                        <button class="btn btn-md btn-primary" ng-model="SubmitReserachDetail" ng-click="ResearchSubmit(myform.$valid)">SAVE & NEXT</button>
+                        <button class="btn btn-md btn-primary" ng-model="ResetResearchDetail" ng-click="ResearchReset()">RESET</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>

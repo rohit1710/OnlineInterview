@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Subject Preference</title>
+    <script src="Script/js/jquery-1.9.1.min.js"></script>
+    <script src="Script/js/bootstrap.js"></script>
+    <link href="Script/css/bootstrap.css" rel="stylesheet" />
+    <script src="Script/js/angular.js"></script>
+    <script src="Script/js/ui-bootstrap-tpls-1.3.0.min.js"></script>
+    <!--<script src="Script/js/ui-bootstrap-tpls-1.3.3.js"></script>-->
+    <script src="Script/js/MyScript.js"></script>
+    <!--<link href="Script/css/MyStyles.css" rel="stylesheet" />-->
+    <script src="Script/js/Mydatepicker.js"></script>
+    <link href="Script/js/MyDatepicker.css" rel="stylesheet" />
+    <script src="Script/js/sweetalert.min.js"></script>
+    <link href="Script/js/sweetalert.css" rel="stylesheet" />
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+            /*font-family: 'Merriweather', serif;*/
+        }
+
+        .backgrond {
+            background-color: #2e3844 !important;
+        }
+    </style>
+</head>
+<body ng-app="myApp" class="backgrond">
+    <form name="myform" data-toggle="validator">
+        <div ng-controller="SubPrefCntrl" class="container">
+            <div class="row">
+                <div class="page-header">
+                    <a href="Default.aspx"></a>
+                    <img src="Images/lpu_logo.png" alt="Lovely Professional University" />
+                </div>
+            </div>
+
+            <div class="alert alert-danger text-center">
+                <strong>SUBJECT  PREFERENCE  TO  BE  FILLED  BY  THE  CANDIDATE  FOR  TEACHING  POST ONLY</strong>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">Give your preference in order of preference for First to Eight </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-offset-1 col-lg-3">
+                            <label class="heading_color">Application ID</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" disabled="disabled" ng-model="SubPrefApplicationId" />
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:8px">
+                        <div class="col-lg-offset-1 col-lg-3">
+                            <label class="heading_color">Subject Stream</label>
+                            <strong style="color:red; font-size:medium">*</strong>
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-model="MainSubjectStream" ng-options="sbjct.ID as sbjct.subject for sbjct in StreamSubject" ng-change="getSubjectStream(MainSubjectStream)" required>
+                                <option value="">--- Please Select ---</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row col-lg-12" style="margin-top:8px">
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                                <tr>
+                                    <th class="heading_color">Preference</th>
+                                    <th class="heading_color">Name Of Subject</th>
+                                    <th class="heading_color">Reason Of Preference</th>
+                                    <th class="heading_color">If any other reason please specify</th>
+                                    <th class="heading_color">Experience in Handling subject (Years)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center" class="heading_color">First<strong style="color:red; font-size:medium"> *</strong></td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="FirstSubject" ng-options="crs.course as crs.course for crs in FirstSubjectCourse" ng-change="CheckPreference(FirstSubject,'1')" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="FirstReason" ng-options="reason.Reasons as reason.Reasons for reason in ReasonOfPreference" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="FirstSubjectOthRea" ng-disabled="FirstReason != 'Any Other'" />
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="FirstSubjectExp" ng-options="yrs.Experience as yrs.Experience for yrs in ExpYears" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center" class="heading_color">Second<strong style="color:red; font-size:medium"> *</strong></td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="SecondSubject" ng-options="crs.course as crs.course for crs in FirstSubjectCourse" ng-change="CheckPreference(SecondSubject,'2')" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="SecondReason" ng-options="reason.Reasons as reason.Reasons for reason in ReasonOfPreference" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SecondSubjectOthRea" ng-disabled="SecondReason != 'Any Other'" />
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="SecondSubjectExp" ng-options="yrs.Experience as yrs.Experience for yrs in ExpYears" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td align="center" class="heading_color">Third<strong style="color:red; font-size:medium"> *</strong></td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="ThirdSubject" ng-options="crs.course as crs.course for crs in FirstSubjectCourse" ng-change="CheckPreference(ThirdSubject,'3')" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="ThirdReason" ng-options="reason.Reasons as reason.Reasons for reason in ReasonOfPreference" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="ThirdSubjectOthRea" ng-disabled="ThirdReason != 'Any Other'" />
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="ThirdSubjectExp" ng-options="yrs.Experience as yrs.Experience for yrs in ExpYears" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td align="center" class="heading_color">Fourth<strong style="color:red; font-size:medium"> *</strong></td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="ForthSubject" ng-options="crs.course as crs.course for crs in FirstSubjectCourse" ng-change="CheckPreference(ForthSubject,'4')" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="ForthReason" ng-options="reason.Reasons as reason.Reasons for reason in ReasonOfPreference" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="ForthSubjectOthRea" ng-disabled="ForthReason != 'Any Other'" />
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="ForthSubjectExp" ng-options="yrs.Experience as yrs.Experience for yrs in ExpYears" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center" class="heading_color">Fifth<strong style="color:red; font-size:medium"> *</strong></td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="FiveSubject" ng-options="crs.course as crs.course for crs in FirstSubjectCourse" ng-change="CheckPreference(FiveSubject,'5')" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="FiveReason" ng-options="reason.Reasons as reason.Reasons for reason in ReasonOfPreference" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="FiveSubjectOthRea" ng-disabled="FiveReason != 'Any Other'" />
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="FiveSubjectExp" ng-options="yrs.Experience as yrs.Experience for yrs in ExpYears" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center" class="heading_color">Sixth<strong style="color:red; font-size:medium"> *</strong></td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="SixSubject" ng-options="crs.course as crs.course for crs in FirstSubjectCourse" ng-change="CheckPreference(SixSubject,'6')" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="SixReason" ng-options="reason.Reasons as reason.Reasons for reason in ReasonOfPreference" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SixSubjectOthRea" ng-disabled="SixReason != 'Any Other'" />
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="SixSubjectExp" ng-options="yrs.Experience as yrs.Experience for yrs in ExpYears" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center" class="heading_color">Seventh<strong style="color:red; font-size:medium"> *</strong></td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="SevenSubject" ng-options="crs.course  as crs.course for crs in FirstSubjectCourse" ng-change="CheckPreference(SevenSubject,'7')" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="SevenReason" ng-options="reason.Reasons as reason.Reasons for reason in ReasonOfPreference" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="SevenSubjectOthRea" ng-disabled="SevenReason != 'Any Other'" />
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="SevenSubjectExp" ng-options="yrs.Experience as yrs.Experience for yrs in ExpYears" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center" class="heading_color">Eight<strong style="color:red; font-size:medium"> *</strong></td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="EightSubject" ng-options="crs.course as crs.course for crs in FirstSubjectCourse" ng-change="CheckPreference(EightSubject,'8')" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="EightReason" ng-options="reason.Reasons as reason.Reasons for reason in ReasonOfPreference" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                    <td align="center">
+                                        <input type="text" class="form-control" ng-model="EightSubjectOthRea" ng-disabled="EightReason != 'Any Other'" />
+                                    </td>
+                                    <td align="center">
+                                        <select class="form-control" ng-model="EightSubjectExp" ng-options="yrs.Experience as yrs.Experience for yrs in ExpYears" required>
+                                            <option value="">-- Please Select --</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row col-lg-12 col-md-12 text-center">
+                        <button class="btn btn-primary" ng-model="SubmitSubPref" ng-click="SubPrefSubmit(myform.$valid)">SAVE & NEXT</button>
+                        <button class="btn btn-primary" ng-model="ResetSubPref" ng-click="SubPrefReset()">RESET</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

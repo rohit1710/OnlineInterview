@@ -1,0 +1,912 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Registration</title>
+    <script src="Script/js/jquery-1.9.1.min.js"></script>
+    <script src="Script/js/bootstrap.js"></script>
+    <link href="Script/css/bootstrap.css" rel="stylesheet" />    
+    <script src="Script/js/angular.js"></script>
+    <script src="Script/js/ui-bootstrap-tpls-1.3.0.min.js"></script>
+    <!--<script src="Script/js/ui-bootstrap-tpls-1.3.3.js"></script>-->
+    <script src="Script/js/MyScript.js"></script>
+    
+    <script src="Script/js/Mydatepicker.js"></script>
+    <link href="Script/js/MyDatepicker.css" rel="stylesheet" />
+    <script src="Script/js/sweetalert.min.js"></script>
+    <link href="Script/js/sweetalert.css" rel="stylesheet" />
+    <!--<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">-->
+    <!--<link href="Script/css/MyStyles.css" rel="stylesheet" />-->
+    <script src="Script/js/moment.js"></script>
+    <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+        .backgrond {
+            background-color: #2e3844 !important;
+        }
+        .loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform: -webkit-translate(-50%, -50%);
+            transform: -moz-translate(-50%, -50%);
+            transform: -ms-translate(-50%, -50%);
+            color: darkred;
+            z-index:1;
+        }
+    </style>
+</head>
+
+<body ng-app="myApp" class="backgrond">
+    <form name="myform" data-toggle="validator">
+        <!--<div ng-show="loading" class="loader" style="width: 100%; text-align: center; padding-top: 60px; font-weight: bold">
+            <img src="Images/flickr.gif" style="height:100px;width:100px" />            
+        </div>-->
+        <div ng-controller="RegCntrl" class="container">
+            <div class="row">
+                <div class="page-header">
+                    <a href="Default.aspx"></a>
+                    <img src="Images/lpu_logo.png" alt="Lovely Professional University" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">PROFESSIONAL PROFILE</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-offset-1 col-lg-3">                                                                
+                                <label class="heading_color">Category Of Appointment</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <select class="form-control" ng-model="Appointment" ng-options="appoint.Type as appoint.Category for appoint in appointments" ng-change="getPost(Appointment)" required>
+                                    <option value="">--- Please Select ---</option>
+                                </select>                                
+                                <!--<select name="appoint" ng-options="user.Category for user in arrlist" ng-model="userselected" ng-change="getPost()">
+                                <option value="">--Select User--</option>
+                            </select>-->
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-3">
+                                <label class="heading_color">Post Applied For</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <select class="form-control" ng-model="AvailPost" ng-options="pst.ID as pst.Post for pst in posts" required>
+                                    <option value="">--- Please Select ---</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-3">
+                                <label class="heading_color">Area Of Specialization</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" ng-model="AreaOfSpecialization" required />
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-3">
+                                <label class="heading_color">Qualification</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" ng-model="Qualification" required />
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-3">
+                                <label class="heading_color">Subject</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <select class="form-control" ng-options="sbjct.subject as sbjct.subject for sbjct in subjects" ng-model="Subject" required ng-change="ArchiAndPahrmaCheck(Subject)">
+                                    <!--ng-change="EnableOtherSubject(Subject.subject)"-->
+                                    <option value="">--- Please Select ---</option>
+                                </select>
+                                <span style="color:red; font-size:small">(If subject not available Please choose other)</span>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px" ng-show="RegistartionNumberVisible">
+                            <div class="col-lg-offset-1 col-lg-3">
+                                <label class="heading_color" ng-model="RegistrationNumberText">{{RegistrationNumberText}}</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" ng-model="txtRegistrationNumber" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px" ng-show="Subject == 'Other'">
+                            <div class="col-lg-offset-1 col-lg-3">
+                                <label class="heading_color">Any Other(Subject)</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" ng-model="OtherSubject" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">PERSONAL & CONTACT DETAILS</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Title</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <select class="form-control" ng-options="ttl.Title as ttl.Title for ttl in Titles" ng-model="Title" required>
+                                    <option value="">--- Please Select ---</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Name</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" ng-model="Name" class="form-control" placeholder="Full Name" required />
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Father's Name</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" ng-model="FName" class="form-control" placeholder="Father's Name" required />
+                            </div>
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Mother's Name</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" ng-model="MName" class="form-control" placeholder="Mother's Name" required />
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Category</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <select class="form-control" ng-options="Cat.Category as Cat.Category for Cat in Categorys" ng-model="Category" required>
+                                    <option value="">--- Please Select ---</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Date Of Birth</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="date" placeholder="DD/MM/YYYY" id="txtDOB" ng-model="DOB" required />
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Nationality</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <select class="form-control" ng-model="Nationality" ng-options="ntn.Nation as ntn.Nation for ntn in National" required>
+                                    <option value="">--- Please Select ---</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Marital Status</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="radio-inline">
+                                    <input type="radio" name="MaritalStatus" ng-model="MaritalStatus" value="Married" required>Married
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="MaritalStatus" ng-model="MaritalStatus" value="UnMarried">UnMarried
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Address</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <textarea class="form-control" placeholder="Permanent Address" ng-model="Address" required></textarea>
+                                <!--<input type="text" class="form-control" placeholder="Permanent Address" ng-model="Address" required />-->
+                            </div>
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Town/City</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <select class="form-control" ng-model="City" ng-options="cty.city as cty.city for cty in Cities" ng-change="getDistrictStateCountry(City)" required>
+                                    <option value="">--- Please Select ---</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">District</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" ng-model="District" placeholder="District" ng-disabled="City !='Other' " required />
+                            </div>
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">State/UT</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" ng-model="State" placeholder="State" ng-disabled="City !='Other' " required />
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Country</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" ng-model="Country" placeholder="Country" ng-disabled="City !='Other' " required />
+                            </div>
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Zip/Postal Code</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="XXXXXX" class="form-control" ng-model="ZipCode" maxlength="6" required />
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Contact No.</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <input class="form-control" ng-model="Mobile" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="10" placeholder="Mobile No." required />
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-phone"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Aadhar Card No.</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="XXXXXXXXXXXX" ng-model="Aadhar" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="12" required />
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Pan Card No.</label>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="XXXXXXXXXX" ng-model="PAN" maxlength="12" />
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-credit-card"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <label class="heading_color">Email</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <input type="email" class="form-control" placeholder="Email" ng-model="pEmail" required />
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-paperclip"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">EDUCATION DETAILS</div>
+                    <div class="panel-body">
+                        <div class="row text-center">
+                            <strong style="COLOR: red"><span style="FONT-SIZE: 10pt">In Case % Marks / CGPA / GPA is not applicable, please fill 0 (Zero). Fill your education detail in chronological order and click to Add.</span></strong>
+                        </div>
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center" class="heading_color"><strong style="color:red; font-size:medium">* </strong>Exam Type</th>
+                                            <th style="text-align: center" class="heading_color">Degree / Diploma / Certificate etc</th>
+                                            <th style="text-align: center" class="heading_color">Duration Of Course (Years)</th>
+                                            <th style="text-align: center" class="heading_color">Duration Of Course (Months)</th>
+                                            <th style="text-align: center" class="heading_color">Subject</th>
+                                            <th style="text-align: center" class="heading_color">University / Board</th>
+                                            <th style="text-align: center" class="heading_color">Institute / College</th>
+                                            <th style="text-align: center" class="heading_color">Status</th>
+                                            <th style="text-align: center" class="heading_color">Year Of Passing</th>                                            
+                                            <th style="text-align: center" class="heading_color">Marks % / CGPA / GPA</th>
+                                            <th style="text-align: center" class="heading_color">Mode Of Education</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td align="center">
+                                                <select class="form-control" ng-options="exmtp.Type as exmtp.Type for exmtp in ExamType" ng-model="AllExamType" ng-change="ExamTypeChange(AllExamType)">
+                                                    <option value="">Select</option>
+                                                </select>
+                                            </td>
+                                            <td align="center">
+                                                <select class="form-control" ng-options="dgre.Degree as dgre.Degree for dgre in Degrees" ng-model="GraduationDegree" ng-show="AllExamType=='Graduation'">
+                                                    <option value="">Please Select</option>
+                                                </select>
+                                                <select class="form-control" ng-options="pdgre.Degree as pdgre.Degree for pdgre in PgDegrees" ng-model="PgDegree" ng-show="AllExamType=='P.G.'">
+                                                    <option value="">Please Select</option>
+                                                </select>
+                                                <input type="text" class="form-control" disabled name="DegreeName" ng-model="DegreeName" ng-hide="AllExamType=='Graduation' || AllExamType=='P.G.'" />
+                                                <input type="text" class="form-control" name="OtherDegree" ng-model="OtherDegree" ng-show="GraduationDegree=='Other' || PgDegree=='Other'" />
+                                            </td>
+                                            <td align="center">
+                                                <select class="form-control" ng-options="cd.Years as cd.Years for cd in CourseDurationYear" ng-model="EdDurationYear">
+                                                    <option value="">Select</option>
+                                                </select>
+                                            </td>
+                                            <td align="center">
+                                                <select class="form-control" ng-options="cd.Months as cd.Months for cd in CourseDurationMonths" ng-model="EdDurationMonths">
+                                                    <option value="">Select</option>
+                                                </select>
+                                            </td>
+                                            <td align="center">
+                                                <input type="text" class="form-control" ng-model="EdSubject" />
+                                            </td>
+                                            <td align="center">
+                                                <input type="text" class="form-control" ng-model="EdUni" />
+                                            </td>
+                                            <td align="center">
+                                                <input type="text" class="form-control" ng-model="EdCollege" />
+                                            </td>
+                                            <td align="center">
+                                                <select ng-model="EdStatus" class="form-control" style="width:auto">
+                                                    <option value="">Select</option>
+                                                    <option value="Completed">Completed</option>
+                                                    <option value="Pursuing">Pursuing</option>
+                                                </select>
+                                            </td>
+                                            <td align="center">
+                                                <input type="text" class="form-control date-Year" ng-model="EdYear" onkeypress="return event.charCode >=48 && event.charCode <=57" maxlength="4" />
+                                            </td>                                            
+                                            <td align="center">
+                                                <input type="text" class="form-control" ng-model="EdMarks" onkeypress="return (event.charCode >= 48 && event.charCode <=57) || event.charCode == 46" maxlength="5" />
+                                            </td>
+                                            <td align="center">
+                                                <select ng-model="EdMode" class="form-control" style="width:auto">
+                                                    <option value="">Select</option>
+                                                    <option value="Regular">Regular</option>
+                                                    <option value="Distance">Distance</option>
+                                                    <option value="Online">Online</option>
+                                                    <option value="Part Time">Part Time</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right" colspan="11">
+                                                <input type="button" class="form-control btn btn-primary" style="width:8%" ng-model="AddEd" value="Add" ng-click="AddEd()" />
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px" ng-show="EducationAddedTable">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered table-responsive" style="background-color:lightgray">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center" class="heading_color">Exam Type</th>
+                                            <th style="text-align: center" class="heading_color">Degree</th>
+                                            <th style="text-align: center" class="heading_color">Duration Of Course (Year)</th>
+                                            <th style="text-align: center" class="heading_color">Duration Of Course (Month)</th>
+                                            <th style="text-align: center" class="heading_color">Subject</th>
+                                            <th style="text-align: center" class="heading_color">University / Board</th>
+                                            <th style="text-align: center" class="heading_color">Institute / College</th>
+                                            <th style="text-align: center" class="heading_color">Status</th>
+                                            <th style="text-align: center" class="heading_color">Year of Passing</th>                                            
+                                            <th style="text-align: center" class="heading_color">Marks</th>
+                                            <th style="text-align: center" class="heading_color">Mode</th>
+                                            <th style="text-align: center" class="heading_color"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="ed in EducationDetail">
+                                        <tr>
+                                            <td align="center">{{ed.EducationExam}}</td>
+                                            <td align="center">{{ed.EducationdDegree}}</td>
+                                            <td align="center">{{ed.EducationDOCY}}</td>
+                                            <td align="center">{{ed.EducationDOCM}}</td>
+                                            <td align="center">{{ed.EducationdSubject}}</td>
+                                            <td align="center">{{ed.EducationdUni}}</td>
+                                            <td align="center">{{ed.EducationdCollege}}</td>
+                                            <td align="center">{{ed.EducationStatus}}</td>
+                                            <td align="center">{{ed.EducationYOP}}</td>
+                                            <td align="center">{{ed.EducationMarks}}</td>
+                                            <td align="center">{{ed.EducationMode}}</td>
+                                            <td align="center">
+                                                <button class="btn btn-primary" value="Remove" ng-click="RemoveEd($index)">Remove</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-12">
+                                <table class="table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td align="left" width="100px"></td>
+                                            <td align="left"><span style="color:red; font-size:small">	Note: * In case of Qualification Pursuing, Please fill the Current information</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="left">10+2</td>
+                                            <td align="left"><span style="color:red; font-size:small">	Arts,Medical,Non Medical,Commerce,Vocational etc.</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="left">Graduation</td>
+                                            <td align="left"><span style="color:red; font-size:small">	B.A,B.Sc,B.Com,BBA,BCA,B.Tech,B.Pharma,B.Arch,B.Ed etc.</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="left">P.G</td>
+                                            <td align="left"><span style="color:red; font-size:small">	M.A,M.Sc,M.Com,MBA,MCA,M.Tech,M.Pharma,M.Arch,M.Ed etc.</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="left">Diploma</td>
+                                            <td align="left"><span style="color:red; font-size:small">	Engineering,Pharmacy,Architecture or Other Fields.</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:15px">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" class="heading_color">Ph.D </td>
+                                            <td align="center" class="heading_color">Title </td>
+                                            <td align="center">
+                                                <input type="text" class="form-control" ng-model="PhdTitle" placeholder="Title of Ph.D" />
+                                            </td>
+                                            <td align="center" class="heading_color">Date Of Award </td>
+                                            <td align="center">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="date" placeholder="DD/MM/YYYY" ng-model="PhdAwardDetail" />
+                                                    <span class="input-group-addon">
+                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">EXPERIENCE DETAILS</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center" class="heading_color">Teaching<strong style="color:red; font-size:medium">* </strong></th>
+                                            <th style="text-align: center" class="heading_color">Research<strong style="color:red; font-size:medium">* </strong></th>
+                                            <th style="text-align: center" class="heading_color">Industry<strong style="color:red; font-size:medium">* </strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td align="center">
+                                                <select class="form-inline" style="width:40%" ng-options="ExpTech.Experience as ExpTech.Experience for ExpTech in ExpYears" ng-model="ExpTeachYear" required>
+                                                    <option value="">In Years</option>
+                                                </select>
+                                                <select class="form-inline" style="width:40%" ng-options="ExpTech.Experience as ExpTech.Experience for ExpTech in ExpMonths" ng-model="ExpTeachMonth" required>
+                                                    <option value="">In Months</option>
+                                                </select>
+                                                <br />
+                                                <span style="color:red; font-size:small">(Please select 0 where not applicable)</span>
+                                            </td>
+                                            <td align="center">
+                                                <select class="form-inline" style="width:40%" ng-options="ExpTech.Experience as ExpTech.Experience for ExpTech in ExpYears" ng-model="ExpResYear" required>
+                                                    <option value="">In Years</option>
+                                                </select>
+                                                <select class="form-inline" style="width:40%" ng-options="ExpTech.Experience as ExpTech.Experience for ExpTech in ExpMonths" ng-model="ExpResMonth" required>
+                                                    <option value="">In Months</option>
+                                                </select>
+                                                <br />
+                                                <span style="color:red; font-size:small">(Please select 0 where not applicable)</span>
+                                            </td>
+                                            <td align="center">
+                                                <select class="form-inline" style="width:40%" ng-options="ExpTech.Experience as ExpTech.Experience for ExpTech in ExpYears" ng-model="ExpIndYear" required>
+                                                    <option value="">In Years</option>
+                                                </select>
+                                                <select class="form-inline" style="width:40%" ng-options="ExpTech.Experience as ExpTech.Experience for ExpTech in ExpMonths" ng-model="ExpIndMonth" required>
+                                                    <option value="">In Months</option>
+                                                </select>
+                                                <br />
+                                                <span style="color:red; font-size:small">(Please select 0 where not applicable)</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-12 text-center">
+                                <strong style="COLOR: red"><span style="FONT-SIZE: 10pt">Please enter your employement expereince in chronological order and click to Add.</span></strong>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center" class="heading_color">Name of Institution /Univeristy /Company</th>
+                                            <th style="text-align: center" class="heading_color">Designation</th>
+                                            <th style="text-align: center" class="heading_color">Start Date</th>
+                                            <th style="text-align: center" class="heading_color">End Date</th>
+                                            <th style="text-align: center" class="heading_color">Salary</th>
+                                            <th style="text-align: center" class="heading_color">Reason of Leaving</th>
+                                            <th style="text-align: center" class="heading_color">Click to Add</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td align="center">
+                                                <input type="text" class="form-control" style="width:90%" ng-model="ExpUniName" placeholder="Institution / Univeristy / Company" />
+                                            </td>
+                                            <td align="center">
+                                                <input type="text" class="form-control" style="width:90%" ng-model="ExpDesignation" placeholder="Designation" />
+                                            </td>
+                                            <td align="center">
+                                                <div class="input-group">
+                                                    <input type="text" name="date" class="form-control" ng-model="ExpStartDate" placeholder="DD/MM/YYYY" />
+                                                    <span class="input-group-addon">
+                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td align="center">
+                                                <div class="input-group">
+                                                    <input type="text" name="date" class="form-control" ng-model="ExpEndDate" placeholder="DD/MM/YYYY" />
+                                                    <span class="input-group-addon">
+                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td align="center">
+                                                <input type="text" class="form-control" style="width:90%" ng-model="ExpSalary" onkeypress="return event.charCode >= 48 && event.charCode <=57" maxlength="7" placeholder="Monthly Salary" />
+                                            </td>
+                                            <td align="center">
+                                                <input type="text" class="form-control" style="width:90%" ng-model="ExpLeaveReason" placeholder="Reason of Leaving" />
+                                            </td>
+                                            <td align="center">
+                                                <input type="button" class="form-control btn btn-primary" style="width:90%" ng-model="AddExp" value="Add" ng-click="AddExperience()" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px" ng-show="ExperienceAddedTable">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered table-responsive" style="background-color:lightgray">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center" class="heading_color">Institution / University</th>
+                                            <th style="text-align: center" class="heading_color">Designation</th>
+                                            <th style="text-align: center" class="heading_color">StartDate</th>
+                                            <th style="text-align: center" class="heading_color">EndDate</th>
+                                            <th style="text-align: center" class="heading_color">Salary</th>
+                                            <th style="text-align: center" class="heading_color">Reason</th>
+                                            <th style="text-align: center" class="heading_color">Click To Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="exp in ExperienceDetail">
+                                        <tr>
+                                            <td align="center">{{exp.University}}</td>
+                                            <td align="center">{{exp.Designation}}</td>
+                                            <td align="center">{{exp.StartDate}}</td>
+                                            <td align="center">{{exp.EndDate}}</td>
+                                            <td align="center">{{exp.Salary}}</td>
+                                            <td align="center">{{exp.Reason}}</td>
+                                            <td align="center">
+                                                <button class="btn btn-primary" value="Remove" ng-click="RemoveExp($index)">Remove</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">WAY OF RESPONDING</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-offset-1 col-lg-4">                                
+                                <label class="heading_color">How did you come to know about this post ?</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <select class="form-control" ng-model="MediaRefrence" ng-options="rspnd.ID as rspnd.Content for rspnd in Responds" required>
+                                    <option value="">--- Please Select ---</option>
+                                </select>
+                                <span style="color:red; font-size:small">(If Refrence not available Please choose other)</span>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px" ng-show="MediaRefrence == '4'">
+                            <div class="col-lg-offset-1 col-lg-4">                                
+                                <label class="heading_color">Any Other</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" ng-model="OtherRef" placeholder="Please Specify" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">LPU WORKING PROFILE</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-offset-1 col-lg-4">                                
+                                <label class="heading_color">Have you already worked with LPU ?</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="radio-inline">
+                                    <input type="radio" name="xEmp" ng-model="xEmp" value="Yes" required ng-change="xEmpChange()" />Yes
+                                    <!--ng-click="IsXEmp('Yes')"-->
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="xEmp" ng-model="xEmp" value="No" />No
+                                    <!--ng-click="IsXEmp('No')"-->
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px" ng-show="xEmp == 'Yes'">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th style="text-align: center" class="heading_color">UID<strong style="color:red; font-size:medium">* </strong></th>
+                                        <th style="text-align: center" class="heading_color">Name Of Department<strong style="color:red; font-size:medium">* </strong></th>
+                                        <th style="text-align: center" class="heading_color">Start Date<strong style="color:red; font-size:medium">* </strong></th>
+                                        <th style="text-align: center" class="heading_color">End Date<strong style="color:red; font-size:medium">* </strong></th>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <input type="text" ng-model="xUID" class="form-control" placeholder="Employee Code" onkeypress="return event.charCode >=48 && event.charCode <= 57" maxlength="8" />
+                                        </td>
+                                        <td align="center">
+                                            <input type="text" ng-model="xDept" class="form-control" placeholder="Name of Department" />
+                                        </td>
+                                        <td align="center">
+                                            <input type="text" ng-model="xStartDate" class="form-control" name="date" placeholder="DD/MM/YYYY" />
+                                        </td>
+                                        <td align="center">
+                                            <input type="text" ng-model="xEndDate" class="form-control" name="date" placeholder="DD/MM/YYYY" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">LPU ALUMNI</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-offset-1 col-lg-4">                                
+                                <label class="heading_color">Are you LPU Alumni ?</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="radio-inline">
+                                    <input type="radio" name="Alumni" ng-model="Alumni" value="Yes" required ng-change="AlumniChange()" />Yes
+                                    <!--ng-click="IsAlumni('Yes')"-->
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="Alumni" ng-model="Alumni" value="No" />No
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px" ng-show="Alumni == 'Yes'">
+                            <div class="col-lg-12">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th style="text-align: center" class="heading_color">Reg No.<strong style="color:red; font-size:medium">* </strong></th>
+                                        <th style="text-align: center" class="heading_color">Program Name<strong style="color:red; font-size:medium">* </strong></th>
+                                        <th style="text-align: center" class="heading_color">Start Date<strong style="color:red; font-size:medium">* </strong></th>
+                                        <th style="text-align: center" class="heading_color">End Date<strong style="color:red; font-size:medium">* </strong></th>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <input type="text" placeholder="Registration Number" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <=57" ng-model="RegNo" maxlength="12" />
+                                        </td>
+                                        <td align="center">
+                                            <input type="text" placeholder="Program Name" class="form-control" ng-model="Program" />
+                                        </td>
+                                        <td align="center">
+                                            <div class="form-group">
+                                                <input class="form-control" name="date" placeholder="DD/MM/YYYY" type="text" ng-model="AlumniStartDate" />
+                                            </div>
+                                        </td>
+                                        <td align="center">
+                                            <input class="form-control" name="date" placeholder="DD/MM/YYYY" type="text" ng-model="AlumniEndDate" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">LPU REFERENCE DETAIL</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-offset-1 col-lg-4">                                
+                                <label class="heading_color">Do you have any LPU reference ?</label>
+                                <strong style="color:red; font-size:medium">* </strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="radio-inline">
+                                    <input type="radio" name="LpuReference" ng-model="LpuRef" value="Yes" required ng-click="LpuReferenceChange()" />Yes
+                                    <!--ng-click="LpuReference('Yes')"-->
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="LpuReference" ng-model="LpuRef" value="No" />No
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:8px" ng-show="LpuRef == 'Yes'">
+                            <div class="col-lg-offset-3 col-lg-6">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center" class="heading_color">Employee Code<strong style="color:red; font-size:medium">* </strong></th>
+                                            <th style="text-align: center" class="heading_color">Employee Name<strong style="color:red; font-size:medium">* </strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td align="center">
+                                                <input type="text" class="form-control" maxlength="8" ng-model="RefEmpCode"
+                                                       placeholder="UID" onkeypress="return event.charCode >=48 && event.charCode <=57" />
+                                            </td>
+                                            <td align="center">
+                                                <input type="text" class="form-control" ng-model="RefEmpName" placeholder="Employee Name" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">CONVENIENT WAY TO CONTACT YOU ?</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-offset-0 col-lg-5 text-center">                                                                
+                                <label class="heading_color">What is the most convenient way to respond you ?</label>                                
+                                <strong style="color:red; font-size:medium">*</strong>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="radio-inline">
+                                    <input type="radio" name="RespondToYou" ng-model="WayToConnect" value="Mail" required />Mail/Post
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="RespondToYou" ng-model="WayToConnect" value="Fax" />Fax
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="RespondToYou" ng-model="WayToConnect" value="Email" />Email
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="RespondToYou" ng-model="WayToConnect" value="SMS" />SMS
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="RespondToYou" ng-model="WayToConnect" value="Phone" />Phone
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 text-center">                        
+                        <button class="btn btn-md btn-primary" ng-model="SubmitRegestration" ng-click="SubmitReg(myform.$valid)">SAVE & NEXT</button>
+                        <button class="btn btn-md btn-primary" ng-model="ResetRegestration" ng-click="ResetReg()">RESET</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var date_input = $('input[name="date"]');
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        var options = {
+            format: 'dd/mm/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,            
+        };
+        date_input.datepicker(options);
+
+        $('.date-Year').datepicker({
+            minViewMode: 2,
+            format: 'yyyy',
+            autoclose: true,
+        });
+
+
+
+    });
+</script>
