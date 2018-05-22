@@ -905,6 +905,17 @@ var app = angular
 							//// logic to call service and save data to database
 
 							var AID = sessionStorage.getItem("AppID");
+
+
+							for (var i = 0; i < $scope.EducationDetail.length; i++)
+							{
+							    if ($scope.EducationDetail[i].EducationExam == "Ph.D") 
+								{
+									sessionStorage.setItem("IsPhd") = "Yes";
+								}
+							}
+
+
 							if (AID == undefined || AID == 'undefined') {
 								AID = null;
 							}
@@ -1098,10 +1109,10 @@ var app = angular
 				.controller("OtherCntrl", function ($scope, $http, $window,$timeout) {
 
 					var AID = sessionStorage.getItem("AppID");
-					if (AID == undefined || AID == null || AID == '')
-					{
-						//swal("Application ID is not valid");
-						//return;
+					if (AID == undefined || AID == null || AID == '') {
+					    swal("Please Re-Login");
+					    $window.location.href = '/LoginPage.html'
+					    return;
 					}
 					$scope.OtherApplicationId = AID;
 
@@ -1313,22 +1324,40 @@ var app = angular
 						$http(req).then(function (response) {
 							var ApplicantCategory = response.data.d;
 
-							if (ApplicantCategory == 'T') {
+							
 
-								swal("Done", "Saved Successfully", "success");
+							if (ApplicantCategory == 'T') {
+								sessionStorage.setItem("IsTeaching") = "Yes";
+							}
+							else{
+								sessionStorage.setItem("IsTeaching") = "No";
+							}
+
+							swal("Done", "Saved Successfully", "success");
+
+
+
+							if (sessionStorage.getItem("IsPhd") == "Yes") {
 								$timeout(function () {
-									$window.location.href = '/SubjectPreference.html';
+										$window.location.href = '/ResearchDetail.html';
 								}, 2000);
 
-								
 							}
 							else
 							{
-								swal("Done", "Saved Successfully", "success");
-								$timeout(function () {
-									$window.location.href = '/GeneratePassword.html';
-								}, 2000);
-								
+							    if(sessionStorage.getItem("IsTeaching") == "Yes")
+								{
+									$timeout(function () {
+										$window.location.href = '/SubjectPreference.html';
+									}, 2000);
+								}
+								else
+								{
+									
+									$timeout(function () {
+										$window.location.href = '/GeneratePassword.html';
+									}, 2000);
+								}
 							}
 							
 						});
@@ -1471,6 +1500,215 @@ var app = angular
 					
 
 				})
+
+				.controller("ResearchCntrl", function ($scope, $http, $window) {
+
+					 var AID = sessionStorage.getItem("AppID");
+					 if (AID == undefined || AID == null || AID == '') {
+						 swal("Please Re-Login");
+						 $window.location.href = '/LoginPage.html'
+						 return;
+					 }
+					 $scope.ResearchApplicationId = AID;
+
+
+					 $scope.ResearchSubmit = function (fromValid) {
+
+						 if (!myform) {
+							 return;
+						 }
+
+						 $scope.ResearchDetail = [];
+						 var phdDetail = {};
+
+						 if ($scope.ResearchScopusNo == undefined) {
+							 phdDetail.JournalScopus = null;
+						 }
+						 else {
+							 phdDetail.JournalScopus = $scope.ResearchScopusNo;
+						 }
+
+						 if ($scope.ResearchWosNo == undefined) {
+							 phdDetail.JournalWos = null;
+						 } else {
+							 phdDetail.JournalWos = $scope.ResearchWosNo;
+						 }
+
+						 if ($scope.ConferenceIndexInScopus == undefined) {
+							 phdDetail.ConferencesPublication = null;
+						 } else {
+							 phdDetail.ConferencesPublication = $scope.ConferenceIndexInScopus;
+						 }
+
+						 if ($scope.GrantExternalFunding == undefined) {
+							 phdDetail.AnyExternalGrant = null;
+						 } else {
+							 phdDetail.AnyExternalGrant = $scope.GrantExternalFunding;
+
+						 }
+
+						 if ($scope.GrantApplied == undefined) {
+							 phdDetail.GrantApplied = null;
+						 } else {
+							 phdDetail.GrantApplied = $scope.GrantApplied;
+						 }
+
+						 if ($scope.PatentGranted == undefined) {
+							 phdDetail.PatentGranted = null;
+						 } else {
+							 phdDetail.PatentGranted = $scope.PatentGranted;
+						 }
+
+						 if ($scope.PatentFilled == undefined) {
+							 phdDetail.PatentFilled = null;
+						 } else {
+							 phdDetail.PatentFilled = $scope.PatentFilled;
+						 }
+
+						 if ($scope.PatentApproved == undefined) {
+							 phdDetail.PatentApproved = null;
+						 } else {
+							 phdDetail.PatentApproved = $scope.PatentApproved;
+						 }
+
+						 if ($scope.Copyright == undefined) {
+							 phdDetail.Copyright = null;
+						 } else {
+							 phdDetail.Copyright = $scope.Copyright;
+						 }
+
+						 if ($scope.BookPublished == undefined) {
+							 phdDetail.BookPublished = null;
+						 } else {
+							 phdDetail.BookPublished = $scope.BookPublished;
+						 }
+
+						 if ($scope.ConferenceRole == undefined) {
+							 phdDetail.OrganizedConferenceRole = null;
+						 } else {
+							 phdDetail.OrganizedConferenceRole = $scope.ConferenceRole;
+						 }
+
+						 if ($scope.PhdSupervised == undefined) {
+							 phdDetail.PhdSupervised = null;
+						 } else {
+							 phdDetail.PhdSupervised = $scope.PhdSupervised;
+						 }
+
+						 if ($scope.PhdSupervising == undefined) {
+							 phdDetail.PhdSupervising = null;
+						 } else {
+							 phdDetail.PhdSupervising = $scope.PhdSupervising;
+						 }
+
+						 if ($scope.MphilSupervised == undefined) {
+							 phdDetail.MphilSupervised = null;
+						 } else {
+							 phdDetail.MphilSupervised = $scope.MphilSupervised;
+						 }
+
+						 if ($scope.MphilSupervising == undefined) {
+							 phdDetail.MphilSupervising = null;
+						 } else {
+							 phdDetail.MphilSupervising = $scope.MphilSupervising;
+						 }
+
+						 if ($scope.AbroadVisit == undefined) {
+							 phdDetail.TravelledAbroad = null;
+						 } else {
+							 phdDetail.TravelledAbroad = $scope.AbroadVisit;
+						 }
+
+						 if ($scope.Hindex == undefined) {
+							 phdDetail.Hindex = null;
+						 } else {
+							 phdDetail.Hindex = $scope.Hindex;
+						 }
+
+						 if ($scope.Iindex == undefined) {
+							 phdDetail.I10index = null;
+						 } else {
+							 phdDetail.I10index = $scope.Iindex;
+						 }
+
+						 if ($scope.CountryVisited == undefined) {
+							 phdDetail.CountriesVisited = null;
+						 } else {
+							 phdDetail.CountriesVisited = $scope.CountryVisited;
+						 }
+
+						 if ($scope.CountryVisitedName == undefined) {
+							 phdDetail.VisitedCountriesName = null;
+						 } else {
+							 phdDetail.VisitedCountriesName = $scope.CountryVisitedName;
+						 }
+
+						 if ($scope.AchievementsAcademics == undefined) {
+							 phdDetail.AcademicsAchievements = null;
+						 } else {
+							 phdDetail.AcademicsAchievements = $scope.AchievementsAcademics;
+						 }
+
+						 if ($scope.AchievementsResearch == undefined) {
+							 phdDetail.ResearchAchievements = null;
+						 } else {
+							 phdDetail.ResearchAchievements = $scope.AchievementsResearch;
+						 }
+
+						 if ($scope.AchievementsIndustry == undefined) {
+							 phdDetail.IndustryEngagementAchievements = null;
+						 } else {
+							 phdDetail.IndustryEngagementAchievements = $scope.AchievementsIndustry;
+						 }
+
+						 if ($scope.AchievementsLeadership == undefined) {
+							 phdDetail.LeadershipAchievements = null;
+						 } else {
+							 phdDetail.LeadershipAchievements = $scope.AchievementsLeadership;
+						 }
+
+						 if ($scope.AchievementsStudentConnect == undefined) {
+							 phdDetail.StudentConnectAchievements = null;
+						 } else {
+							 phdDetail.StudentConnectAchievements = $scope.AchievementsStudentConnect;
+						 }
+
+						 $scope.ResearchDetail.push(phdDetail);
+
+
+						 var req = {
+							 method: 'POST',
+							 url: "BasicServices.asmx/saveResearchDetail",
+							 data: { AppID: $scope.ResearchApplicationId, rsd: $scope.ResearchDetail }
+						 }
+
+						 $http(req).then(function (response) {
+
+							 console.log(response.data);
+
+							 if (sessionStorage.getItem("IsTeaching") == "Yes") {
+								 $timeout(function () {
+									 $window.location.href = '/SubjectPreference.html';
+								 }, 2000);
+							 }
+							 else {
+
+								 $timeout(function () {
+									 $window.location.href = '/GeneratePassword.html';
+								 }, 2000);
+							 }
+						 });
+
+						 console.log($scope.ResearchDetail);
+
+
+					 }
+
+					 $scope.ResearchReset = function () {
+						 $window.location.reload();
+					 }
+
+				 })
 
 				.controller("SubPrefCntrl", function ($scope, $http, $window,$timeout) {                    
 
@@ -1926,11 +2164,20 @@ var app = angular
 								sessionStorage.setItem("Subject", $scope.MainSubjectStream.subject);
 
 								swal("Done", "Saved Successfully", "success");
-								$timeout(function () {
-									$window.location.href = '/GeneratePassword.html';
-								}, 2000);
 
-								
+								if (sessionStorage.getItem("IsPhd") == "Yes") {
+									$timeout(function () {
+										$window.location.href = '/ResearchDetail.html';
+									}, 2000);
+
+								}
+
+								else
+								{
+									$timeout(function () {
+										$window.location.href = '/GeneratePassword.html';
+									}, 2000);
+								}
 							}
 							else {
 								swal("Oops!! Something went wrong Contact to Admin");
@@ -2082,190 +2329,7 @@ var app = angular
 					//}
 				})
 				
-				.controller("ResearchCntrl", function ($scope, $http, $window) {
-
-					var AID = sessionStorage.getItem("AppID");
-					if (AID == undefined || AID == null || AID == '') {
-						swal("Please Re-Login");
-						$window.location.href = '/LoginPage.html'
-						return;
-					}
-					$scope.ResearchApplicationId = AID;
-
-
-					$scope.ResearchSubmit = function (fromValid) {
-
-						if (!myform) {
-							return;
-						}
-
-						$scope.ResearchDetail = [];
-						var phdDetail = {};
-																		
-						if ($scope.ResearchScopusNo == undefined) {
-							phdDetail.ScopusNo = null;
-						}
-						else {
-							phdDetail.ScopusNo = $scope.ResearchScopusNo;
-						}
-						
-						if ($scope.ResearchWosNo == undefined) {
-							phdDetail.WosNo = null;
-						} else {
-							phdDetail.WosNo = $scope.ResearchWosNo;
-						}
-																		
-						if ($scope.ConferenceIndexInScopus == undefined) {
-							phdDetail.ConferenceIndexInScopus = null;
-						} else {
-							phdDetail.ConferenceIndexInScopus = $scope.ConferenceIndexInScopus;
-						}
-						
-						if ($scope.GrantExternalFunding == undefined) {
-							phdDetail.GrantExternalFunding = null;
-						} else {
-							phdDetail.GrantExternalFunding = $scope.GrantExternalFunding;
-
-						}
-
-						if ($scope.GrantApplied == undefined) {
-							phdDetail.GrantApplied = null;
-						} else {
-							phdDetail.GrantApplied = $scope.GrantApplied;
-						}
-
-						if ($scope.PatentGranted == undefined) {
-							phdDetail.PatentGranted = null;
-						} else {
-							phdDetail.PatentGranted = $scope.PatentGranted;
-						}
-
-						if ($scope.PatentFilled == undefined) {
-							phdDetail.PatentFilled = null;
-						} else {
-							phdDetail.PatentFilled = $scope.PatentFilled;
-						}
-
-						if ($scope.PatentApproved == undefined) {
-							phdDetail.PatentApproved = null;
-						} else {
-							phdDetail.PatentApproved = $scope.PatentApproved;
-						}
-
-						if ($scope.Copyright == undefined) {
-							phdDetail.Copyright = null;
-						} else {						    
-							phdDetail.Copyright = $scope.Copyright;
-						}
-						
-						if ($scope.BookPublished == undefined) {
-							phdDetail.BookPublished = null;
-						} else {
-							phdDetail.BookPublished = $scope.BookPublished;
-						}
-
-						if ($scope.ConferenceRole == undefined) {
-							phdDetail.ConferenceRole = null;
-						} else {
-							phdDetail.ConferenceRole = $scope.ConferenceRole;
-						}
-
-						if ($scope.PhdSupervised == undefined) {
-							phdDetail.PhdSupervised = null;
-						} else {
-							phdDetail.PhdSupervised = $scope.PhdSupervised;
-						}
-
-						if ($scope.PhdSupervising == undefined) {
-							phdDetail.PhdSupervising = null;
-						} else {
-							phdDetail.PhdSupervising = $scope.PhdSupervising;
-						}
-						
-						if ($scope.MphilSupervised == undefined) {
-							phdDetail.MphilSupervised = null;
-						} else {
-							phdDetail.MphilSupervised = $scope.MphilSupervised;
-						}
-
-						if ($scope.MphilSupervising == undefined) {
-							phdDetail.MphilSupervising = null;
-						} else {
-							phdDetail.MphilSupervising = $scope.MphilSupervising;
-						}
-
-						if ($scope.AbroadVisit == undefined) {
-							phdDetail.AbroadVisit = null;
-						} else {
-							phdDetail.AbroadVisit = $scope.AbroadVisit;
-						}
-
-						if ($scope.Hindex == undefined) {
-							phdDetail.Hindex = null;
-						} else {
-							phdDetail.Hindex = $scope.Hindex;
-						}
-
-						if ($scope.Iindex == undefined) {
-							phdDetail.Iindex = null;
-						} else {
-							phdDetail.Iindex = $scope.Iindex;
-						}
-
-						if ($scope.CountryVisited == undefined) {
-							phdDetail.CountryVisited = null;
-						} else {
-							phdDetail.CountryVisited = $scope.CountryVisited;
-						}
-
-						if ($scope.CountryVisitedName == undefined) {
-							phdDetail.CountryVisitedName = null;
-						} else {
-							phdDetail.CountryVisitedName = $scope.CountryVisitedName;
-						}					    
-
-						if ($scope.AchievementsAcademics == undefined) {
-							phdDetail.AchievementsAcademics = null;
-						} else {
-							phdDetail.AchievementsAcademics = $scope.AchievementsAcademics;
-						}
-
-						if ($scope.AchievementsResearch == undefined) {
-							phdDetail.AchievementsResearch = null;
-						} else {
-							phdDetail.AchievementsResearch = $scope.AchievementsResearch;
-						}
-
-						if ($scope.AchievementsIndustry == undefined) {
-							phdDetail.AchievementsIndustry = null;
-						} else {
-							phdDetail.AchievementsIndustry = $scope.AchievementsIndustry;
-						}
-
-						if ($scope.AchievementsLeadership == undefined) {
-							phdDetail.AchievementsLeadership = null;
-						} else {
-							phdDetail.AchievementsLeadership = $scope.AchievementsLeadership;
-						}
-
-						if ($scope.AchievementsStudentConnect == undefined) {
-							phdDetail.AchievementsStudentConnect = null;
-						} else {
-							phdDetail.AchievementsStudentConnect = $scope.AchievementsStudentConnect;
-						}
-
-
-						$scope.ResearchDetail.push(phdDetail);
-						console.log($scope.ResearchDetail);
-
-
-					}
-
-					$scope.ResearchReset = function () {
-						$window.location.reload();
-					} 
-
-				})
+				
 
 
 

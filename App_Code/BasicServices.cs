@@ -590,6 +590,35 @@ public class BasicServices : System.Web.Services.WebService {
     }
 
     [WebMethod(EnableSession = true)]
+    public string saveResearchDetail(string AppID,List<ResearchDetail> rsd) 
+    {
+        string constr = ConfigurationManager.ConnectionStrings["NewUMSConnectionString"].ConnectionString.ToString();
+        string result = "";
+        using (SqlConnection con = new SqlConnection(constr))
+        {
+            SqlParameter[] prm = new SqlParameter[3];
+
+            prm[0] = new SqlParameter("@AppID", AppID);
+            prm[1] = new SqlParameter("@Type", "SaveResearchDetail");
+
+            DataTable ResearchTable = new DataTable();
+            ResearchTable = ListExtensions.ToDataTable(rsd);
+            ResearchTable.TableName = "Research";
+            string ResearchXML = CreateXml(ResearchTable);
+
+            prm[2] = new SqlParameter("@ResearchDetailXML", ResearchXML);
+
+            result = SqlHelper.ExecuteScalar(con, CommandType.StoredProcedure, "pOnlineTestProcessForInterview", prm).ToString();
+
+        }
+        return result;
+    }
+
+
+
+
+
+    [WebMethod(EnableSession = true)]
     public string Password(string AppID,string pwd, string cpwd,string sub)
     {
         string constr = ConfigurationManager.ConnectionStrings["NewUMSConnectionString"].ConnectionString.ToString();
@@ -1071,6 +1100,34 @@ public class BasicServices : System.Web.Services.WebService {
 
     public class ArchiAndPharma {
         public string RegNo { get; set; }
+    }
+
+    public class ResearchDetail { 
+        public string JournalScopus { get; set; }
+        public string JournalWos { get; set; }
+        public string ConferencesPublication { get; set; }
+        public string AnyExternalGrant { get; set; }
+        public string GrantApplied { get; set; }
+        public string PatentGranted { get; set; }
+        public string PatentFilled { get; set; }
+        public string PatentApproved { get; set; }
+        public string Copyright { get; set; }
+        public string BookPublished { get; set; }
+        public string OrganizedConferenceRole { get; set; }
+        public string PhdSupervised { get; set; }
+        public string PhdSupervising { get; set; }
+        public string MphilSupervised { get; set; }
+        public string MphilSupervising { get; set; }
+        public string TravelledAbroad { get; set; }
+        public string Hindex { get; set; }
+        public string I10index { get; set; }
+        public string CountriesVisited { get; set; }
+        public string VisitedCountriesName { get; set; }
+        public string AcademicsAchievements { get; set; }
+        public string ResearchAchievements { get; set; }
+        public string IndustryEngagementAchievements { get; set; }
+        public string LeadershipAchievements { get; set; }
+        public string StudentConnectAchievements { get; set; }
     }
 }
 
